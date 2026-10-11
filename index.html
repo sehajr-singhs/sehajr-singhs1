@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sehaj Singh</title>
+<meta name="description" content="Sehaj Randhir Singh, control and dynamics engineer in New York. Building the Index of Operations, a representation for machine intelligence that reads a machine as the shape it draws.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="./">Sehaj Singh</a>
+  <nav>
+    <a href="ioo/">IOO</a>
+    <a href="#research">Research</a>
+    <a href="#work">Work</a>
+    <a href="blog/">Writing</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="hero">
+  <div class="intro">
+    <p class="lede">I build learned controllers for physical machines that come with proofs, not hopes.</p>
+    <p>I'm a control and dynamics engineer in New York and a junior at Queens High School for the Sciences. I grew up hearing about the power grid from my dad, a grid operating engineer, and I keep coming back to one question. How do you make machine intelligence that understands the machine it runs on?</p>
+    <p>Right now that means the <a href="ioo/">Index of Operations</a>, a representation that reads a machine as the shape it draws, and certified stability for grid controllers with <a href="https://engineering.nyu.edu/" target="_blank" rel="noopener">Prof. Wenqi Cui's group at NYU Tandon</a>.</p>
+    <div class="affil">Research Collaborator, Cui Group, NYU Tandon ECE &nbsp;·&nbsp; Columbia Science Honors Program &nbsp;·&nbsp; Queens, NY</div>
+  </div>
+  <figure class="photo" id="photo"><img src="photo.jpg" alt="Sehaj Singh" onerror="document.getElementById('photo').remove();document.getElementById('hero').classList.add('no-photo')"></figure>
+</section>
+
+<a class="feature" href="ioo/">
+  <div class="k">What I'm building</div>
+  <div class="t">The Index of Operations: every machine draws a shape.</div>
+  <div class="d">A machine's sensors trace a curved surface in high-dimensional space. IOO compiles any machine into physical operators joined where they trade energy and force, then learns the shape they draw together. It keeps the low-level signals world models throw away, and it holds when the sensors are recalibrated (OPS-SAT AUROC 0.749 to 0.736, where raw features fall 0.919 to 0.487).</div>
+  <span class="go">Read the idea and the evidence →</span>
+</a>
+
+<div class="sec-label" id="research">Research</div>
+<div class="sec-note">Peer-reviewed work first, then the projects that feed into IOO. Every number below comes from the linked code.</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title">Learning Lyapunov Functions for Power System Transient Stability: Neural Verification and Retraining <span class="tag on">Accepted</span></div></div>
+    <div class="e-body">Sehaj R. Singh, Wenqi Cui. <b>Tackling Climate Change with ML, NeurIPS 2026 workshop.</b> A learned stability function passes on 99.98% of sampled states, and 200,000 random samples find no violation, yet a directed search finds them 6.1% of the time. Using the verifier as the sampler, then training through the CROWN bound, certifies the region to ρ = 2.5 on all five seeds where counterexample repair stalls at 1.8, with three independent verifiers in agreement.</div>
+    <div class="e-links"><a href="https://openreview.net/forum?id=iAKq71lqO6" target="_blank" rel="noopener">Paper</a><a href="https://github.com/sehajr-singhs/certified-training-lyapunov" target="_blank" rel="noopener">Code</a></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title"><a href="https://sehajr-singhs.github.io/operating-atlas/">The Shapes a Machine Draws</a> <span class="tag">Manuscript</span></div><div class="e-meta">2026</div></div>
+    <div class="e-body">Every pair of a machine's channels traces a shape as it runs. Nine descriptors of those shapes identify <b>7 real systems at 99.4%</b> across 309 records, and keep <b>99.0%</b> under re-instrumentation where marginal statistics fall to 80.3%. The direct ancestor of IOO.</div>
+    <div class="e-links"><a href="https://sehajr-singhs.github.io/operating-atlas/manuscript_NCS.pdf">Manuscript (22 pp)</a><a href="https://github.com/sehajr-singhs/operating-atlas">Code</a></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title"><a href="https://sehajr-singhs.github.io/adaptive-contact-dynamics/">Stability-constrained neural adaptive control</a></div><div class="e-meta">2026</div></div>
+    <div class="e-body">A bounded RBF network inside a Lyapunov-derived MRAC update law with σ-modification and projection, tested on four MuJoCo environments including a UR5e arm. <b>2.06° joint error vs 98.98°</b> for the unconstrained ablation on the hardest contact task.</div>
+    <div class="e-links"><a href="https://github.com/sehajr-singhs/adaptive-contact-dynamics">Code</a><a href="https://github.com/sehajr-singhs/SELF-MODELING-STABLE-CONTROL">Self-modeling follow-up (R² 0.985 on unseen drift)</a></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title"><a href="https://github.com/sehajr-singhs/time-series-operator">Time-Series Operator</a></div><div class="e-meta">2026</div></div>
+    <div class="e-body">Time as geometry instead of tokens: delay embedding, Koopman lifting and a learned vector field, pretrained across domains. <b>31 of 40 zero-shot wins</b> against a per-series GRU, and it recovers the 11-year solar cycle from a held-out channel (128 months vs 132 known). It also reports its own negative result at matched compute.</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title"><a href="https://github.com/sehajr-singhs/operator">Electric Adaptation and OPERATOR</a></div><div class="e-meta">2025–26</div></div>
+    <div class="e-body">The manifesto that started it: motor controllers that keep learning as hardware ages, inside a Lyapunov-stable adaptive core. Its "operators" became the index in IOO. <b>MIT THINK Scholars semifinalist</b> (about 29 of 1,042).</div>
+  </div>
+</div>
+
+<div class="sec-label" id="work">Work</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title">Research Collaborator, Cui Group, NYU Tandon ECE</div><div class="e-meta">2026 – now</div></div>
+    <div class="e-body">Formal verification and certified training of neural Lyapunov functions for power-system transient stability, extending the open problem named in Cui and Zhang's Lyapunov-regularized RL work. The only person in the group on Lyapunov stability.</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title">Research Intern, data-center grid infrastructure startup</div><div class="e-meta">2025 – now</div></div>
+    <div class="e-body">Power-flow studies for how new AI data-center load interconnects to the grid, including generation-and-tie planning and line selection. Role and findings are confidential, so this is described at the level of capability.</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title">Study of the AI data-center boom and the grid</div><div class="e-meta">2026 – now</div></div>
+    <div class="e-body">A long-form study of whether generation and transmission can keep pace with data-center load, built from conversations with people at OpenAI (transmission interconnection), Mitsubishi Heavy Industries, NYISO, PJM, ERCOT and NYSERDA. Written as my AP Research project, scoped to New York with lessons for the U.S. grid.</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="dot"></div>
+  <div>
+    <div class="e-head"><div class="e-title">Hack Hardware lead, QHSS HACK!</div><div class="e-meta">2026 – now</div></div>
+    <div class="e-body">Run the hardware division (PCBs and hands-on builds) and lead software for the school hackathon. Before that, FTC robotics with QHSS Cardinal Robotics through the World Championship in Houston, and Engineering Lead on the MIT BeaverWorks CubeSat program.</div>
+  </div>
+</div>
+
+<div class="sec-label">Recognition</div>
+<ul class="list">
+  <li><span>Paper accepted, Tackling Climate Change with ML @ NeurIPS 2026</span><span>2026</span></li>
+  <li><span>Reviewer, ML4PS workshop @ NeurIPS 2026</span><span>2026</span></li>
+  <li><span>Columbia University Science Honors Program, Powering the Future</span><span>2026–27</span></li>
+  <li><span>MIT THINK Scholars semifinalist, about 29 of 1,042</span><span>2026</span></li>
+  <li><span>FTC World Championship competitor, QHSS Cardinal Robotics</span><span>Houston</span></li>
+</ul>
+
+<div class="sec-label">Writing</div>
+<ul class="post-list">
+  <li><a class="pt" href="blog/what-world-models-throw-away.html">What world models throw away</a><div class="d">October 2026</div><p>Machines fail at the low level first. A model that predicts in a compressed latent can't see it coming.</p></li>
+  <li><a class="pt" href="blog/the-biggest-machine.html">The biggest machine we've ever built</a><div class="d">October 2026</div><p>How a grid operator's kid ended up writing Lyapunov proofs, and why the data-center boom is a control problem.</p></li>
+</ul>
+
+<div class="sec-label">Outside the lab</div>
+<div class="chips">
+  <span>Tabla</span><span>Tennis</span><span>Swimming</span><span>3D printing on a Bambu H2D</span><span>Cosmology and foundational physics</span><span>Sikhi, and Azaad AI, a model for studying it</span><span>Minecraft, still</span>
+</div>
+
+<div class="sec-label" id="contact">Contact</div>
+<div class="contact">
+  <div class="row"><b>Email</b> <a href="mailto:sehajrsinghs@gmail.com">sehajrsinghs@gmail.com</a></div>
+  <div class="row"><b>GitHub</b> <a href="https://github.com/sehajr-singhs">github.com/sehajr-singhs</a></div>
+  <div class="row"><b>LinkedIn</b> <a href="https://www.linkedin.com/in/sehaj-randhir-singh">linkedin.com/in/sehaj-randhir-singh</a></div>
+  <div class="row"><b>Kaggle</b> <a href="https://www.kaggle.com/sehajrsingh">kaggle.com/sehajrsingh</a></div>
+</div>
+
+<footer>Sehaj Randhir Singh · New York · 2026</footer>
+</div>
+</body>
+</html>

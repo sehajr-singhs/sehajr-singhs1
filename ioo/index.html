@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Index of Operations · Sehaj Singh</title>
+<meta name="description" content="The Index of Operations (IOO): a representation for machine intelligence that compiles a machine into physical operators and learns the shape they draw together.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="../">Sehaj Singh</a>
+  <nav>
+    <a href="./" class="active">IOO</a>
+    <a href="../#research">Research</a>
+    <a href="../#work">Work</a>
+    <a href="../blog/">Writing</a>
+    <a href="../#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="kicker">Index of Operations · IOO</div>
+<h1 class="title">Every machine draws a shape.</h1>
+<p class="sub">IOO is a representation for machine intelligence. It compiles a machine into the physical operators it's made of, joins them where they trade energy and force, and learns the shape they trace together. It's the layer a world action model for real machines needs, and the first pieces already work.</p>
+
+<figure class="fig" aria-label="Interactive illustration of a machine's shape under recalibration and fault">
+  <div class="panels">
+    <div class="panel"><span class="cap">Raw sensor readings</span><canvas id="raw"></canvas></div>
+    <div class="panel"><span class="cap">The shape IOO reads</span><canvas id="shape"></canvas></div>
+  </div>
+  <div class="controls" role="group" aria-label="Machine state">
+    <button data-s="healthy" aria-pressed="true">Healthy</button>
+    <button data-s="recal" aria-pressed="false">Recalibrate sensors</button>
+    <button data-s="fault" aria-pressed="false">Inject a fault</button>
+  </div>
+  <div class="readout" id="readout"></div>
+</figure>
+<p class="figcap">Illustration, not data. Three coupled channels of one machine, drawn as a curve in their joint state space.</p>
+
+<div class="prose">
+
+<h2>The idea, in plain words</h2>
+<p>A motor, a pump and a robot joint each run inside a narrow band of what's physically possible. Couple them together and the band gets narrower still, because energy that leaves one part has to arrive at the next. So a machine's state never fills the box of all possible sensor readings. It lives on a curved surface inside that box, and that surface is the machine.</p>
+<p>Most machine learning reads the raw numbers in the flat box. It has to relearn the physics from scratch for every unit, it breaks when someone recalibrates a sensor, and it misses faults that only show up in how the parts relate to each other. IOO reads the surface instead.</p>
+
+<h2>How it works</h2>
+<ol class="steps">
+  <li><b>Index the operators.</b> Every hardware primitive (DC motor, pump, thermal mass, actuator) gets its own local geometry, a physical operating envelope, and ports where it exchanges energy, mass, heat or force with its neighbors.</li>
+  <li><b>Compose at the interfaces.</b> Primitives join into one graph at their physical interfaces. A class of machines is just a different arrangement drawn from the same index.</li>
+  <li><b>Read conservation, not levels.</b> A healthy interface conserves what flows across it. IOO measures how much that conservation slips. Because the slip is normalized by magnitude, per-channel recalibration cancels exactly (checked numerically to 1e-14).</li>
+  <li><b>Act on the shape.</b> A message-passing model reads the graph for detection, prediction and control, and a slip gate turns adaptation on only when a boundary stops conserving. When nothing is wrong, control is untouched.</li>
+</ol>
+
+<h2>What world models throw away</h2>
+<p>Today's world models and vision-language-action policies compress what they see into a latent and treat fine-grained signal as noise. That's the right call for predicting where a ball lands. It's the wrong call for machines, because a bearing, a winding or a weld fails as a small change in how two parts relate long before anything shows up at the macro level. IOO gives every operator its own axes, so the low level stays visible. In simulation it flagged every injected fault with a median lead of about 90 seconds, while a correlation detector fired at the moment of failure.</p>
+
+<h3>A thought experiment</h3>
+<p>Give a robot two rounded stubs instead of hands and ask it to type. A policy trained on video of human fingers has nothing to imitate. A model that indexes its own body as operators sees a geometry problem instead. The stub's contact patch covers three keys, so it tilts until the patch covers one, feels for slip at the contact, and corrects. A new body is a new shape drawn from the same index, not a new dataset.</p>
+<p>That's where IOO is going, not what it does today. The closest evidence so far is in control: in simulation, a controller with frozen weights carried through a swap from a DC motor to an AC motor.</p>
+
+<h2>A flywheel that runs on structure</h2>
+<p>Most of physical AI is betting on collecting more hours of data. IOO bets on reuse. Every machine it reads adds operators to the index, and the next machine built from those operators starts with a prior instead of an empty model. The models are graphs of tens of nodes that run on a CPU, which means they can live on the machine itself.</p>
+
+<h2>Evidence so far</h2>
+<div class="tablewrap">
+<table class="nums">
+  <thead><tr><th>Test</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>ESA OPS-SAT CubeSat telemetry, official 2,123-segment protocol</td><td>AUROC <b>0.911 → 0.951</b> over the published baseline, F1 0.744 → 0.848. The same number of plain statistics buys only +0.010, so the gain is coupling, not capacity.</td></tr>
+    <tr><td>Sensor recalibration, OPS-SAT</td><td>Conservation slip <b>0.749 → 0.736</b>. Raw features 0.919 → 0.487. A domain-adversarial net trained with target data drops 0.36.</td></tr>
+    <tr><td>Sensor recalibration, turbofan engines</td><td>Affine drop <b>0.0012</b>, against 0.310 for raw statistics.</td></tr>
+    <tr><td>Hexapod robot, 145,683 gaits, 154 joint-fault classes</td><td>Detection AUC <b>0.990</b> vs 0.890 raw. Fault localization macro-AUC 1.000 from coupling alone.</td></tr>
+    <tr><td>CruiseBench, all 9 subsets, protocol-exact</td><td>RMSE <b>1.78 ± 0.11</b> vs LSTM 6.17 and GRU 2.02. Wins 6 of 9; the 3 losses are reported.</td></tr>
+    <tr><td>Control, simulation</td><td>Frozen weights through a DC-to-AC motor swap, <b>0.0001</b> steady-state error vs 2.4% sag for a flat model. <b>8.2×</b> lower tracking error under a 5× actuator gain loss, with healthy control bit-identical.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>What it doesn't do yet</h2>
+<ul>
+  <li>Control is simulation-only, on a motor-and-flywheel plant, and there's no stability certificate yet tying the slip gate to closed-loop robustness.</li>
+  <li>Operators are modeled by hand, and the catalog is mostly rotating machinery.</li>
+  <li>The property that makes the shape immune to recalibration also blinds it to slow level drift, which is real wear. It complements raw statistics rather than replacing them.</li>
+  <li>On 10-minute wind-farm SCADA data nothing works, IOO included, because the averaging erases the dynamics. That's the edge of where this applies.</li>
+</ul>
+
+<h2>Where it came from</h2>
+<p><a href="https://github.com/sehajr-singhs/operator">Electric Adaptation</a> asked for motor controllers that keep learning as hardware ages, built from "operators" inside a Lyapunov-stable core. <a href="https://sehajr-singhs.github.io/operating-atlas/">The Shapes a Machine Draws</a> showed that the relationships between a machine's channels identify it and survive re-instrumentation. IOO is what both were reaching for. My work on <a href="../#research">certified Lyapunov functions</a> with Prof. Wenqi Cui is how the control side gets proofs.</p>
+
+<h2>Next</h2>
+<ol class="steps">
+  <li>Hardware in the loop: one frozen controller across a physical actuator swap on a bench motor and a robot joint.</li>
+  <li>A stability certificate for slip-gated control under bounded gain error.</li>
+  <li>Two different machine types, a pump and a motor, in one graph.</li>
+  <li>Learn new operators from data, so the index grows itself.</li>
+</ol>
+<p>Code and result files are private for now. If you want to check a number, <a href="mailto:sehajrsinghs@gmail.com">email me</a>.</p>
+</div>
+
+<footer>Sehaj Randhir Singh · New York · 2026</footer>
+</div>
+
+<script>
+(() => {
+  const N = 520, TAU = Math.PI * 2;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const text = {
+    healthy: 'Healthy. Three coupled channels trace one closed shape, because energy leaving one part has to arrive at the next.',
+    recal: 'Sensors recalibrated: each channel rescaled and shifted. The raw readings move, so a model trained on them sees an anomaly that isn’t there. The shape is unchanged, so IOO stays quiet.',
+    fault: 'A boundary stops conserving. The relationship between the channels changes, so the shape itself deforms. That deformation is what IOO flags.'
+  };
+  function base(t, fault) {
+    const ph = fault ? 0.6 + 1.1 * Math.sin(t) : 0.6;
+    const amp = fault ? 0.8 + 0.28 * Math.cos(5 * t) : 0.8;
+    return [Math.sin(t), amp * Math.sin(2 * t + ph), 0.6 * Math.cos(3 * t) + 0.2 * Math.sin(t)];
+  }
+  function curves(state) {
+    const raw = [];
+    for (let i = 0; i <= N; i++) {
+      const t = (i / N) * TAU;
+      let p = base(t, state === 'fault');
+      if (state === 'recal') p = [1.7 * p[0] + 0.55, 0.5 * p[1] - 0.35, 1.45 * p[2] + 0.3];
+      raw.push(p);
+    }
+    const mean = [0, 1, 2].map(k => raw.reduce((s, p) => s + p[k], 0) / raw.length);
+    const sd = [0, 1, 2].map(k => Math.sqrt(raw.reduce((s, p) => s + (p[k] - mean[k]) ** 2, 0) / raw.length));
+    const norm = raw.map(p => p.map((v, k) => 0.42 * (v - mean[k]) / sd[k]));
+    return { raw: raw.map(p => p.map(v => v * 0.62)), norm };
+  }
+  const cvs = [document.getElementById('raw'), document.getElementById('shape')];
+  let state = 'healthy', cur = curves(state), target = cur, mix = 1, ang = 0.6;
+  function size() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cvs.forEach(c => { const w = c.clientWidth; c.width = w * dpr; c.height = w * dpr; c.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0); });
+  }
+  function proj(p, w, a) {
+    const ca = Math.cos(a), sa = Math.sin(a), tilt = 0.42, ct = Math.cos(tilt), st = Math.sin(tilt);
+    const x = p[0] * ca - p[2] * sa, z = p[0] * sa + p[2] * ca;
+    const y = p[1] * ct - z * st, d = p[1] * st + z * ct;
+    const s = w * 0.36 / (1 + d * 0.18);
+    return [w / 2 + x * s, w / 2 - y * s, d];
+  }
+  function draw(c, pts, a) {
+    const ctx = c.getContext('2d'), w = c.clientWidth;
+    ctx.clearRect(0, 0, w, w);
+    ctx.strokeStyle = 'rgba(245,243,239,0.12)'; ctx.lineWidth = 1;
+    const B = 1.1, cube = [[-B,-B,-B],[B,-B,-B],[B,B,-B],[-B,B,-B],[-B,-B,B],[B,-B,B],[B,B,B],[-B,B,B]];
+    [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([i, j]) => {
+      const p = proj(cube[i].map(v => v * 0.62), w, a), q = proj(cube[j].map(v => v * 0.62), w, a);
+      ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+    });
+    ctx.lineWidth = 1.6; ctx.lineCap = 'round';
+    for (let i = 1; i < pts.length; i++) {
+      const p = proj(pts[i - 1], w, a), q = proj(pts[i], w, a);
+      const alpha = Math.max(0.25, Math.min(1, 0.7 - q[2] * 0.35));
+      ctx.strokeStyle = 'rgba(245,243,239,' + alpha.toFixed(3) + ')';
+      ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+    }
+  }
+  const lerp = (A, B, m) => A.map((p, i) => p.map((v, k) => v + (B[i][k] - v) * m));
+  function frame() {
+    if (mix < 1) { mix = Math.min(1, mix + 0.045); }
+    const e = 1 - Math.pow(1 - mix, 3);
+    const r = lerp(cur.raw, target.raw, e), n = lerp(cur.norm, target.norm, e);
+    if (mix >= 1) cur = target;
+    if (!reduce) ang += 0.0045;
+    draw(cvs[0], r, ang); draw(cvs[1], n, ang);
+    if (!reduce || mix < 1) requestAnimationFrame(frame);
+  }
+  const ro = document.getElementById('readout');
+  document.querySelectorAll('.fig button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.fig button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    const sNew = b.dataset.s; if (sNew === state) return;
+    const now = mix >= 1 ? cur : { raw: lerp(cur.raw, target.raw, 1 - Math.pow(1 - mix, 3)), norm: lerp(cur.norm, target.norm, 1 - Math.pow(1 - mix, 3)) };
+    cur = now; state = sNew; target = curves(state); mix = 0; ro.textContent = text[state];
+    if (reduce) requestAnimationFrame(frame);
+  }));
+  ro.textContent = text.healthy;
+  size(); window.addEventListener('resize', () => { size(); if (reduce) requestAnimationFrame(frame); });
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

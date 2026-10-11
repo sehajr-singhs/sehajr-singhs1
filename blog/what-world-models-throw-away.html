@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What world models throw away · Sehaj Singh</title>
+<meta name="description" content="Machines fail at the low level first. A model that predicts in a compressed latent can't see it coming.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="brand" href="../">Sehaj Singh</a>
+  <nav><a href="../ioo/">IOO</a><a href="../#research">Research</a><a href="../#work">Work</a><a href="./" class="active">Writing</a><a href="../#contact">Contact</a></nav>
+</header>
+
+<div class="kicker">Writing</div>
+<h1 class="title">What world models throw away</h1>
+<div class="meta">October 2026</div>
+
+<div class="prose">
+<p>The best world models right now learn by compression. They take in a scene, encode it into a smaller latent, and predict how that latent will evolve, treating fine-grained detail as noise to be ignored. For a lot of the physical world that's exactly right. If you want to know where a thrown ball lands, the texture of its stitching doesn't matter.</p>
+
+<p>Machines are different, because machines fail at the level that compression throws away. A bearing starts to wear, a winding heats a few degrees, a joint picks up a little backlash. None of that changes the big picture at first. What changes is how two parts relate to each other, a small break in the energy that should pass cleanly from one to the next. By the time it shows up at the macro level, it's a failure instead of a warning.</p>
+
+<blockquote>A model that predicts in a compressed latent can't see the fault coming, because the fault lives in what it compressed.</blockquote>
+
+<h2>Keeping the low level</h2>
+<p>That's the reason I built the <a href="../ioo/">Index of Operations</a> the way I did. Instead of compressing a machine into one latent, IOO splits it into the physical operators it's made of, each with its own axes, and joins them where they exchange energy, mass, heat or force. Then it watches whether each joint keeps conserving what flows across it.</p>
+
+<p>The payoff shows up in an unglamorous test, recalibration. On ESA's OPS-SAT satellite telemetry, a detector built on raw features drops from 0.919 to 0.487 AUROC when the sensors are rescaled. That's barely better than a coin flip, for a change that has nothing to do with the satellite's health. Reading conservation at the joints, it goes from 0.749 to 0.736. The machine didn't change, so the representation doesn't either.</p>
+
+<h2>A robot with no hands</h2>
+<p>Here's the thought experiment I keep coming back to. Put a robot with two rounded stubs for arms in front of a keyboard and ask it to type. A policy trained on video of human hands has nothing to copy, because nothing in its data looks like its body. But a model that indexes its own body as operators can treat it as geometry. The stub covers three keys at once, so it tilts until its contact patch covers one, feels for slip where it touches, and corrects. A new body is a new shape drawn from the same index, not a new dataset.</p>
+
+<p>IOO can't do that yet. Its control results are in simulation, and I still build each operator by hand. But the direction matters, because the alternative is collecting a fresh pile of data for every body and every machine, forever.</p>
+
+<p>I think the world models that run real machines won't be the ones that have watched the most video. They'll be the ones that know what the machine is made of.</p>
+</div>
+
+<footer><a href="./">← All writing</a></footer>
+</div>
+</body>
+</html>

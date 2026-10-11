@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The biggest machine we've ever built · Sehaj Singh</title>
+<meta name="description" content="How a grid operator's kid ended up writing Lyapunov proofs, and why the data-center boom is a control problem.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="brand" href="../">Sehaj Singh</a>
+  <nav><a href="../ioo/">IOO</a><a href="../#research">Research</a><a href="../#work">Work</a><a href="./" class="active">Writing</a><a href="../#contact">Contact</a></nav>
+</header>
+
+<div class="kicker">Writing</div>
+<h1 class="title">The biggest machine we've ever built</h1>
+<div class="meta">October 2026</div>
+
+<div class="prose">
+<p>My dad has been a grid operating engineer for 35 years. Because of him I learned early that the power grid isn't a bill or a wall socket. It's a machine, and it's the biggest one people have ever built. Every large generator on it spins in lockstep at 60 cycles a second, and every time someone turns something on, the whole machine has to answer within seconds or the frequency starts to slide.</p>
+
+<p>What surprised me when I started reading about it was how much of that answering is done by controllers that were tuned once and then left alone. The hardware ages, the loads change, new kinds of generation show up, and the control law mostly stays where it was set. That's the gap I wanted to work on, so I started writing small experiments on anything that might make it adapt. The first real version was Electric Adaptation, a design for motor controllers that keep learning as the hardware drifts, with a stable adaptive core so the learning can't push the machine over.</p>
+
+<h2>Why the data-center boom is a control problem</h2>
+<p>Now the grid is being asked to absorb something it wasn't planned for. AI data centers arrive as huge blocks of load, they arrive fast, and they want to connect in places where the wires were sized for a different decade. Most of the public conversation is about generation, how many power plants we need. Working on interconnection studies and on a long-form study of the boom, I've come to think the harder question is dynamic. Can the system stay stable while it changes this quickly, with learned components making more of the decisions?</p>
+
+<h2>Sampling isn't proof</h2>
+<p>That question is why I work on certified control. With Prof. Wenqi Cui at NYU, I took a learned stability function for grid frequency that looked perfect by testing. It satisfied its stability condition on 99.98% of sampled states, and 200,000 random samples found no violation at all. A directed search found violations 6.1% of the time. Testing visits a few points, and a proof has to cover the whole region. Closing that gap, by using the verifier itself to find counterexamples and then training through the verifier's bound, is what our NeurIPS workshop paper is about.</p>
+
+<p>The grid is going to get learned controllers whether anyone is ready or not, because it's the only way to keep up. I want them to come with proofs.</p>
+</div>
+
+<footer><a href="./">← All writing</a></footer>
+</div>
+</body>
+</html>
